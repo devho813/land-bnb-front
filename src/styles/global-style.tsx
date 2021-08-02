@@ -10,6 +10,7 @@ const globalStyle = css`
   }
 
   body {
+    font-family: Noto Sans, Noto Sans KR, sans-serif;
     color: ${palette.black};
   }
 `;
