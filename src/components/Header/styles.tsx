@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import palette from "../../styles/palette";
 
-export const container = css`
+export const headerContainer = css`
   position: sticky;
   top: 0;
   width: 100%;
