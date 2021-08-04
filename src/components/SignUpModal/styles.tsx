@@ -31,3 +31,13 @@ export const passwordWrapper = css`
   }
 `;
 
+export const signUpBirthdatLabel = css`
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 8px;
+`;
+export const signUpModalBirthdayInfo = css`
+  margin-bottom: 16px;
+  color: ${palette.charcoal};
+`;
