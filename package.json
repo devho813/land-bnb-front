@@ -1,8 +1,8 @@
 {
-  "name": "land-bnb",
+  "name": "land-bnb-front",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/devho813/land-bnb.git",
+  "repository": "https://github.com/devho813/land-bnb-front.git",
   "author": "devho813 <devho813@gmail.com>",
   "license": "MIT",
   "scripts": {
