@@ -17,15 +17,16 @@ import PersonIcon from "../../../public/assets/person.svg";
 import OpenedEyeIcon from "../../../public/assets/opened_eye.svg";
 import ClosedEyeIcon from "../../../public/assets/closed_eye.svg";
 import Input from "../common/Input";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import Selector from "../common/Selector";
 import { dayList, monthList, yearList } from "../../lib/staticData";
 import Button from "../common/Button";
+import { signupAPI } from "../../lib/api/auth";
 
 function SignUpModal() {
   const [email, setEmail] = useState("");
   const [lastname, setLastname] = useState("");
-  const [firtstname, setFirstname] = useState("");
+  const [firstname, setFirstname] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
 
@@ -59,8 +60,31 @@ function SignUpModal() {
     setBirthMonth(e.target.value);
   };
 
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const body = {
+        email,
+        lastname,
+        firstname,
+        password,
+        birthday: new Date(
+          `${birthYear?.replace("년", "")}-${birthMonth?.replace(
+            "월",
+            ""
+          )}-${birthDay?.replace("일", "")}`
+        ).toISOString(),
+      };
+
+      await signupAPI(body)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div css={SignUpModalContainer}>
+    <form css={SignUpModalContainer} onSubmit={onSubmit}>
       <CloseXIcon css={modalCloseXIcon} />
       <div css={inputWrapper}>
         <Input
@@ -86,7 +110,7 @@ function SignUpModal() {
           type="text"
           placeholder="성(예: 홍)"
           icon={<PersonIcon />}
-          value={firtstname}
+          value={firstname}
           onChange={onChangeFirstname}
         />
       </div>
@@ -143,7 +167,7 @@ function SignUpModal() {
       <div css={signUpModalSubmitButtonWrapper}>
         <Button type="submit">가입 하기</Button>
       </div>
-    </div>
+    </form>
   );
 }
 
