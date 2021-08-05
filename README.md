@@ -1,4 +1,4 @@
-# Landbnb
+# 🛩 Landbnb
 숙박 공유 플랫폼 Airbnb 클론 앱 Landbnb입니다.
 
 사용 기술: #typescript #react #next.js #redux #redux-saga #redux-toolkit
