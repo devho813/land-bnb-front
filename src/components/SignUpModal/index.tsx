@@ -22,6 +22,8 @@ import Selector from "../common/Selector";
 import { dayList, monthList, yearList } from "../../lib/staticData";
 import Button from "../common/Button";
 import { signupAPI } from "../../lib/api/auth";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/user";
 
 function SignUpModal() {
   const [email, setEmail] = useState("");
@@ -33,6 +35,8 @@ function SignUpModal() {
   const [birthYear, setBirthYear] = useState<string | undefined>();
   const [birthDay, setBirthDay] = useState<string | undefined>();
   const [birthMonth, setBirthMonth] = useState<string | undefined>();
+
+  const dispatch = useDispatch()
 
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -77,7 +81,8 @@ function SignUpModal() {
         ).toISOString(),
       };
 
-      await signupAPI(body)
+      const { data } = await signupAPI(body);
+      dispatch(userActions.setLoggedUser(data))
     } catch (error) {
       console.error(error);
     }
