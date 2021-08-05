@@ -3,8 +3,13 @@ import {
   modalCloseXIcon,
   passwordWrapper,
   signUpBirthdatLabel,
+  signUpModalBirthdayDaySelector,
   signUpModalBirthdayInfo,
+  signUpModalBirthdayMonthSelector,
+  signUpModalBirthdaySelectors,
+  signUpModalBirthdayYearSelector,
   SignUpModalContainer,
+  signUpModalSubmitButtonWrapper,
 } from "./styles";
 import CloseXIcon from "../../../public/assets/modal_close_x_icon.svg";
 import MailIcon from "../../../public/assets/mail.svg";
@@ -12,9 +17,10 @@ import PersonIcon from "../../../public/assets/person.svg";
 import OpenedEyeIcon from "../../../public/assets/opened_eye.svg";
 import ClosedEyeIcon from "../../../public/assets/closed_eye.svg";
 import Input from "../common/Input";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import Selector from "../common/Selector";
-import { monthList } from "../../lib/staticData";
+import { dayList, monthList, yearList } from "../../lib/staticData";
+import Button from "../common/Button";
 
 function SignUpModal() {
   const [email, setEmail] = useState("");
@@ -22,6 +28,10 @@ function SignUpModal() {
   const [firtstname, setFirstname] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
+
+  const [birthYear, setBirthYear] = useState<string | undefined>();
+  const [birthDay, setBirthDay] = useState<string | undefined>();
+  const [birthMonth, setBirthMonth] = useState<string | undefined>();
 
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -37,6 +47,16 @@ function SignUpModal() {
   };
   const toggleHidePassword = () => {
     setHidePassword((prevState) => !prevState);
+  };
+
+  const onChangeBirthYear = (e: ChangeEvent<HTMLSelectElement>) => {
+    setBirthYear(e.target.value);
+  };
+  const onChangeBirthDay = (e: ChangeEvent<HTMLSelectElement>) => {
+    setBirthDay(e.target.value);
+  };
+  const onChangeBirthMonth = (e: ChangeEvent<HTMLSelectElement>) => {
+    setBirthMonth(e.target.value);
   };
 
   return (
@@ -91,7 +111,38 @@ function SignUpModal() {
         만 18세 이상의 성인만 회원으로 가입할 수 있습니다. 생일은 다른
         에어비앤비 이용자에게 공개되지 않습니다.
       </p>
-      <Selector options={monthList} disabledOption="월" defaultValue="월"/>
+      <div css={signUpModalBirthdaySelectors}>
+        <div css={signUpModalBirthdayMonthSelector}>
+          <Selector
+            options={monthList}
+            disabledOption="월"
+            defaultValue="월"
+            onChange={onChangeBirthMonth}
+            value={birthYear}
+          />
+        </div>
+        <div css={signUpModalBirthdayDaySelector}>
+          <Selector
+            options={dayList}
+            disabledOption="일"
+            defaultValue="일"
+            onChange={onChangeBirthDay}
+            value={birthDay}
+          />
+        </div>
+        <div css={signUpModalBirthdayYearSelector}>
+          <Selector
+            options={yearList}
+            disabledOption="년"
+            defaultValue="년"
+            onChange={onChangeBirthYear}
+            value={birthMonth}
+          />
+        </div>
+      </div>
+      <div css={signUpModalSubmitButtonWrapper}>
+        <Button type="submit">가입 하기</Button>
+      </div>
     </div>
   );
 }
