@@ -4,13 +4,32 @@ import palette from "../../styles/palette";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: JSX.Element;
+  isValid?: boolean;
+  validateMode?: boolean;
+  useValidation?: boolean;
+  errorMessage?: string;
 }
 
-function Input({ icon, ...props }: IProps) {
+function Input({
+  icon,
+  isValid = false,
+  validateMode,
+  useValidation = true,
+  errorMessage,
+  ...props
+}: IProps) {
   return (
-    <div css={container}>
+    <div
+      css={container}
+      className={`${isValid ? "isValid" : ""} ${
+        validateMode && useValidation ? "useValidation" : ""
+      }`}
+    >
       <input {...props} className={icon ? "iconExist" : ""} />
       <div css={inputIconWrapper}>{icon}</div>
+      {useValidation && validateMode && !isValid && errorMessage && (
+        <p css={inputErrorMessage}>{errorMessage}</p>
+      )}
     </div>
   );
 }
@@ -18,6 +37,24 @@ function Input({ icon, ...props }: IProps) {
 export default Input;
 
 const container = css`
+  &.useValidation {
+    /* 밸리데이션 에러 */
+    input {
+      background-color: ${palette.snow};
+      border-color: ${palette.orange};
+
+      &:focus {
+        border-color: ${palette.orange};
+      }
+    }
+  }
+
+  &.useValidation.isValid {
+    /* 밸리데이션 통과 */
+    input {
+      border-color: ${palette.dark_cyan};
+    }
+  }
 
   input {
     position: relative;
@@ -29,7 +66,7 @@ const container = css`
     font-size: 16px;
     outline: none;
 
-    &.iconExist{
+    &.iconExist {
       padding: 0 44px 0 11px;
     }
 
@@ -48,4 +85,11 @@ const inputIconWrapper = css`
   height: 46px;
   display: flex;
   align-items: center;
+`;
+
+const inputErrorMessage = css`
+  margin-top: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: ${palette.tawny};
 `;
