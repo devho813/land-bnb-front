@@ -25,6 +25,7 @@ import Button from "../common/Button";
 import { signupAPI } from "../../lib/api/auth";
 import { userActions } from "../../store/user";
 import useValidateMode from "../../hooks/useValidateMode";
+import PasswordWarning from "../PasswordWarning";
 
 const PASSWORD_MIN_LENGTH = 8;
 
@@ -69,7 +70,7 @@ function SignUpModal() {
     const regExp1 = /[{}[\]/?.,;:|)*~`!^\-_+<>@#$%&\\=('"]/g;
     const regExp2 = /[0-9]/g;
 
-    if (!regExp1.test(password) && !regExp2.test(password)) {
+    if (!regExp1.test(password) || !regExp2.test(password)) {
       return false;
     }
 
@@ -192,10 +193,24 @@ function SignUpModal() {
           value={password}
           onChange={onChangePassword}
           useValidation
-          isValid={!!password}
+          isValid={
+            isPasswordHasNameOrEmail &&
+            isPasswordOverMinLength &&
+            isPasswordHasNumberOrSymbol
+          }
           errorMessage="비밀번호를 입력하세요"
           onFocus={onFocusPassword}
         />
+        {passwordFocused && (
+          <>
+            <PasswordWarning
+              isValid={isPasswordHasNameOrEmail}
+              text="비밀번호에 본인 이름이나 이메일 주소를 포함할 수 없습니다."
+            />
+            <PasswordWarning isValid={isPasswordOverMinLength} text="최소 8자" />
+            <PasswordWarning isValid={isPasswordHasNumberOrSymbol} text="숫자나 기호를 포함하세요." />
+          </>
+        )}
       </div>
 
       <p css={signUpBirthdatLabel}>생일</p>

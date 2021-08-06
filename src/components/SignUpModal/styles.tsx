@@ -18,7 +18,7 @@ export const inputWrapper = css`
   position: relative;
   margin-bottom: 16px;
 
-  svg {
+  & > svg {
     position: absolute;
     right: 11px;
     top: 16px;
