@@ -17,9 +17,8 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 let initialRootState: RootState;
 
-// SSR
 const reducer = (state: any, action: any) => {
-  if ((action.type = HYDRATE)) {
+  if (action.type === HYDRATE) {
     if (state === initialRootState) {
       return {
         ...state,

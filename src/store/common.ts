@@ -11,7 +11,6 @@ const common = createSlice({
   reducers: {
     setValidationMode(state, action: PayloadAction<boolean>) {
       state.validateMode = action.payload;
-      return state;
     },
   },
 });

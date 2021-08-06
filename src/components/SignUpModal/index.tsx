@@ -24,6 +24,7 @@ import Button from "../common/Button";
 import { signupAPI } from "../../lib/api/auth";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/user";
+import useValidateMode from "../../hooks/useValidateMode";
 
 function SignUpModal() {
   const [email, setEmail] = useState("");
@@ -36,9 +37,8 @@ function SignUpModal() {
   const [birthDay, setBirthDay] = useState<string | undefined>();
   const [birthMonth, setBirthMonth] = useState<string | undefined>();
 
-  const dispatch = useDispatch()
-
-  const [validateMode, setValidateMode] = useState(false)
+  const dispatch = useDispatch();
+  const { setValidateMode } = useValidateMode();
 
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -69,7 +69,7 @@ function SignUpModal() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setValidateMode(true);
+    setValidateMode(true)
 
     if (!email || !lastname || !firstname || !password) {
       return undefined;
@@ -90,7 +90,7 @@ function SignUpModal() {
       };
 
       const { data } = await signupAPI(body);
-      dispatch(userActions.setLoggedUser(data))
+      dispatch(userActions.setLoggedUser(data));
     } catch (error) {
       console.error(error);
     }
@@ -107,7 +107,6 @@ function SignUpModal() {
           icon={<MailIcon />}
           value={email}
           onChange={onChangeEmail}
-          validateMode={validateMode}
           useValidation
           isValid={!!email}
           errorMessage="이메일이 필요합니다."
@@ -120,7 +119,6 @@ function SignUpModal() {
           icon={<PersonIcon />}
           value={lastname}
           onChange={onChangeLastname}
-          validateMode={validateMode}
           useValidation
           isValid={!!lastname}
           errorMessage="이름을 입력하세요."
@@ -133,7 +131,6 @@ function SignUpModal() {
           icon={<PersonIcon />}
           value={firstname}
           onChange={onChangeFirstname}
-          validateMode={validateMode}
           useValidation
           isValid={!!firstname}
           errorMessage="성을 입력하세요."
@@ -152,7 +149,6 @@ function SignUpModal() {
           }
           value={password}
           onChange={onChangePassword}
-          validateMode={validateMode}
           useValidation
           isValid={!!password}
           errorMessage="비밀번호를 입력하세요"

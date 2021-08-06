@@ -1,11 +1,11 @@
 import { css } from "@emotion/react";
 import React from "react";
+import useValidateMode from "../../hooks/useValidateMode";
 import palette from "../../styles/palette";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: JSX.Element;
   isValid?: boolean;
-  validateMode?: boolean;
   useValidation?: boolean;
   errorMessage?: string;
 }
@@ -13,11 +13,12 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 function Input({
   icon,
   isValid = false,
-  validateMode,
   useValidation = true,
   errorMessage,
   ...props
 }: IProps) {
+  const { validateMode } = useValidateMode();
+
   return (
     <div
       css={container}
