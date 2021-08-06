@@ -17,7 +17,7 @@ import PersonIcon from "../../../public/assets/person.svg";
 import OpenedEyeIcon from "../../../public/assets/opened_eye.svg";
 import ClosedEyeIcon from "../../../public/assets/closed_eye.svg";
 import Input from "../common/Input";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useMemo, useState } from "react";
 import Selector from "../common/Selector";
 import { dayList, monthList, yearList } from "../../lib/staticData";
 import Button from "../common/Button";
@@ -25,6 +25,8 @@ import { signupAPI } from "../../lib/api/auth";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/user";
 import useValidateMode from "../../hooks/useValidateMode";
+
+const PASSWORD_MIN_LENGTH = 8;
 
 function SignUpModal() {
   const [email, setEmail] = useState("");
@@ -39,6 +41,40 @@ function SignUpModal() {
 
   const dispatch = useDispatch();
   const { setValidateMode } = useValidateMode();
+
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const isPasswordHasNameOrEmail = useMemo(() => {
+    // password가 이름이나 이메일을 포함하는지 체크
+    if (
+      !password ||
+      !email ||
+      password.includes(lastname) ||
+      password.includes(email.split("@")[0])
+    ) {
+      return false;
+    }
+
+    return true;
+  }, [password, lastname, email]);
+  const isPasswordOverMinLength = useMemo(() => {
+    // 비밀번호 최소 자릿수 이상인지
+    if (password.length < PASSWORD_MIN_LENGTH) {
+      return false;
+    }
+
+    return true;
+  }, [password]);
+  const isPasswordHasNumberOrSymbol = useMemo(() => {
+    // 기호나 숫자를 포함하는지
+    const regExp1 = /[{}[\]/?.,;:|)*~`!^\-_+<>@#$%&\\=('"]/g;
+    const regExp2 = /[0-9]/g;
+
+    if (!regExp1.test(password) && !regExp2.test(password)) {
+      return false;
+    }
+
+    return true;
+  }, [password]);
 
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -66,10 +102,14 @@ function SignUpModal() {
     setBirthMonth(e.target.value);
   };
 
+  const onFocusPassword = () => {
+    setPasswordFocused(true);
+  };
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setValidateMode(true)
+    setValidateMode(true);
 
     if (!email || !lastname || !firstname || !password) {
       return undefined;
@@ -152,6 +192,7 @@ function SignUpModal() {
           useValidation
           isValid={!!password}
           errorMessage="비밀번호를 입력하세요"
+          onFocus={onFocusPassword}
         />
       </div>
 
