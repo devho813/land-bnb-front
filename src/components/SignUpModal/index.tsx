@@ -1,3 +1,5 @@
+import React, { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   inputWrapper,
   modalCloseXIcon,
@@ -17,12 +19,10 @@ import PersonIcon from "../../../public/assets/person.svg";
 import OpenedEyeIcon from "../../../public/assets/opened_eye.svg";
 import ClosedEyeIcon from "../../../public/assets/closed_eye.svg";
 import Input from "../common/Input";
-import React, { ChangeEvent, FormEvent, useMemo, useState } from "react";
 import Selector from "../common/Selector";
 import { dayList, monthList, yearList } from "../../lib/staticData";
 import Button from "../common/Button";
 import { signupAPI } from "../../lib/api/auth";
-import { useDispatch } from "react-redux";
 import { userActions } from "../../store/user";
 import useValidateMode from "../../hooks/useValidateMode";
 
@@ -134,6 +134,8 @@ function SignUpModal() {
     } catch (error) {
       console.error(error);
     }
+
+    return null;
   };
 
   return (

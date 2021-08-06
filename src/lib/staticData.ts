@@ -13,5 +13,5 @@ export const monthList = [
   "12월",
 ];
 
-export const dayList = Array.from({length: 31}, (v, i) => `${i + 1}일`)
-export const yearList = Array.from({length: 121}, (v, i) => `${i + 1900}년`)
+export const dayList = Array.from({ length: 31 }, (v, i) => `${i + 1}일`);
+export const yearList = Array.from({ length: 121 }, (v, i) => `${i + 1900}년`);

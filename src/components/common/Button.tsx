@@ -8,7 +8,7 @@ interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 function Button({ children, ...props }: IProps) {
   return (
-    <button css={container} {...props}>
+    <button type="button" css={container} {...props}>
       {children}
     </button>
   );

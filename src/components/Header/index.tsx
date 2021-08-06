@@ -1,5 +1,4 @@
-import AirbnbLogoIcon from "../../../public/assets/logo.svg";
-import AirbnbLogoTextIcon from "../../../public/assets/logo_text.svg";
+import Link from "next/link";
 import {
   authButtons,
   headerContainer,
@@ -8,9 +7,10 @@ import {
   logoWrapper,
   signUpButton,
 } from "./styles";
-import Link from "next/link";
 import SignUpModal from "../SignUpModal";
 import useModal from "../../hooks/useModal";
+import AirbnbLogoIcon from "../../../public/assets/logo.svg";
+import AirbnbLogoTextIcon from "../../../public/assets/logo_text.svg";
 
 function Header() {
   const { openModal, ModalPortal } = useModal();
@@ -24,11 +24,7 @@ function Header() {
         </div>
       </Link>
       <div css={authButtons}>
-        <button
-          type="button"
-          css={signUpButton}
-          onClick={openModal}
-        >
+        <button type="button" css={signUpButton} onClick={openModal}>
           회원가입
         </button>
         <button type="button" css={loginButton}>

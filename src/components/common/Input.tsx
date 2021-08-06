@@ -4,10 +4,10 @@ import useValidateMode from "../../hooks/useValidateMode";
 import palette from "../../styles/palette";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  icon?: JSX.Element;
-  isValid?: boolean;
-  useValidation?: boolean;
-  errorMessage?: string;
+  icon: any;
+  isValid: boolean;
+  useValidation: boolean;
+  errorMessage: string;
 }
 
 function Input({

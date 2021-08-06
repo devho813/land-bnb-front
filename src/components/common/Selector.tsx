@@ -3,15 +3,15 @@ import React from "react";
 import palette from "../../styles/palette";
 
 interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  options?: string[];
+  options: string[];
   disabledOption: string;
-  value?: string;
+  value: string | undefined;
 }
 
-function Selector({ options = [], disabledOption, ...props }: IProps) {
+function Selector({ options = [], disabledOption, value, ...props }: IProps) {
   return (
     <div css={container}>
-      <select {...props}>
+      <select {...props} value={value}>
         <option value={disabledOption} disabled>
           {disabledOption}
         </option>
