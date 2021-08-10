@@ -13,7 +13,7 @@ import AirbnbLogoIcon from "../../../public/assets/logo.svg";
 import AirbnbLogoTextIcon from "../../../public/assets/logo_text.svg";
 
 function Header() {
-  const { openModal, ModalPortal } = useModal();
+  const { openModal, closeModal, ModalPortal } = useModal();
 
   return (
     <header css={headerContainer}>
@@ -32,7 +32,7 @@ function Header() {
         </button>
       </div>
       <ModalPortal>
-        <SignUpModal />
+        <SignUpModal closeModal={closeModal} />
       </ModalPortal>
     </header>
   );

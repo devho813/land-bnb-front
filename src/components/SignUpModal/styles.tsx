@@ -63,3 +63,9 @@ export const signUpModalSubmitButtonWrapper = css`
   padding-bottom: 16px;
   border-bottom: 1px solid ${palette.gray_eb};
 `;
+
+export const signUpModalSetLogin = css`
+  color: ${palette.dark_cyan};
+  margin-left: 8px;
+  cursor: pointer;
+`;

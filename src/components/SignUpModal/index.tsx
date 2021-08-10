@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useDispatch } from "react-redux";
 import {
   inputWrapper,
@@ -11,6 +17,7 @@ import {
   signUpModalBirthdaySelectors,
   signUpModalBirthdayYearSelector,
   SignUpModalContainer,
+  signUpModalSetLogin,
   signUpModalSubmitButtonWrapper,
 } from "./styles";
 import CloseXIcon from "../../../public/assets/modal_close_x_icon.svg";
@@ -29,7 +36,11 @@ import PasswordWarning from "../PasswordWarning";
 
 const PASSWORD_MIN_LENGTH = 8;
 
-function SignUpModal() {
+interface IProps {
+  closeModal: () => void;
+}
+
+function SignUpModal({ closeModal }: IProps) {
   const [email, setEmail] = useState("");
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -42,6 +53,12 @@ function SignUpModal() {
 
   const dispatch = useDispatch();
   const { setValidateMode } = useValidateMode();
+
+  useEffect(() => {
+    return () => {
+      setValidateMode(false);
+    };
+  }, []);
 
   const [passwordFocused, setPasswordFocused] = useState(false);
   const isPasswordHasNameOrEmail = useMemo(() => {
@@ -107,33 +124,53 @@ function SignUpModal() {
     setPasswordFocused(true);
   };
 
+  const validateSignUpForm = () => {
+    if (!email || !lastname || !firstname || !password) {
+      return false;
+    }
+
+    if (
+      !isPasswordHasNameOrEmail ||
+      !isPasswordOverMinLength ||
+      !isPasswordHasNumberOrSymbol
+    ) {
+      return false;
+    }
+
+    if (!birthDay || !birthMonth || !birthYear) {
+      return false;
+    }
+
+    return true;
+  };
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setValidateMode(true);
 
-    if (!email || !lastname || !firstname || !password) {
-      return undefined;
-    }
+    if (validateSignUpForm()) {
+      try {
+        const body = {
+          email,
+          lastname,
+          firstname,
+          password,
+          birthday: new Date(
+            `${birthYear?.replace("년", "")}-${birthMonth?.replace(
+              "월",
+              ""
+            )}-${birthDay?.replace("일", "")}`
+          ).toISOString(),
+        };
 
-    try {
-      const body = {
-        email,
-        lastname,
-        firstname,
-        password,
-        birthday: new Date(
-          `${birthYear?.replace("년", "")}-${birthMonth?.replace(
-            "월",
-            ""
-          )}-${birthDay?.replace("일", "")}`
-        ).toISOString(),
-      };
+        const { data } = await signupAPI(body);
+        dispatch(userActions.setLoggedUser(data));
 
-      const { data } = await signupAPI(body);
-      dispatch(userActions.setLoggedUser(data));
-    } catch (error) {
-      console.error(error);
+        closeModal();
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     return null;
@@ -141,7 +178,7 @@ function SignUpModal() {
 
   return (
     <form css={SignUpModalContainer} onSubmit={onSubmit}>
-      <CloseXIcon css={modalCloseXIcon} />
+      <CloseXIcon css={modalCloseXIcon} onClick={closeModal} />
       <div css={inputWrapper}>
         <Input
           type="email"
@@ -207,8 +244,14 @@ function SignUpModal() {
               isValid={isPasswordHasNameOrEmail}
               text="비밀번호에 본인 이름이나 이메일 주소를 포함할 수 없습니다."
             />
-            <PasswordWarning isValid={isPasswordOverMinLength} text="최소 8자" />
-            <PasswordWarning isValid={isPasswordHasNumberOrSymbol} text="숫자나 기호를 포함하세요." />
+            <PasswordWarning
+              isValid={isPasswordOverMinLength}
+              text="최소 8자"
+            />
+            <PasswordWarning
+              isValid={isPasswordHasNumberOrSymbol}
+              text="숫자나 기호를 포함하세요."
+            />
           </>
         )}
       </div>
@@ -225,7 +268,8 @@ function SignUpModal() {
             disabledOption="월"
             defaultValue="월"
             onChange={onChangeBirthMonth}
-            value={birthYear}
+            value={birthMonth}
+            isValid={!!birthMonth}
           />
         </div>
         <div css={signUpModalBirthdayDaySelector}>
@@ -235,6 +279,7 @@ function SignUpModal() {
             defaultValue="일"
             onChange={onChangeBirthDay}
             value={birthDay}
+            isValid={!!birthDay}
           />
         </div>
         <div css={signUpModalBirthdayYearSelector}>
@@ -243,13 +288,22 @@ function SignUpModal() {
             disabledOption="년"
             defaultValue="년"
             onChange={onChangeBirthYear}
-            value={birthMonth}
+            value={birthYear}
+            isValid={!!birthYear}
           />
         </div>
       </div>
       <div css={signUpModalSubmitButtonWrapper}>
         <Button type="submit">가입 하기</Button>
       </div>
+
+      <p>
+        이미 에어비앤비 계정이 있나요?
+        <span css={signUpModalSetLogin} role="presentation" onClick={() => {}}>
+          로그인
+        </span>
+        `
+      </p>
     </form>
   );
 }

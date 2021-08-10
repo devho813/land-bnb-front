@@ -1,17 +1,34 @@
 import { css } from "@emotion/react";
 import React from "react";
+import { useSelector } from "../../store";
 import palette from "../../styles/palette";
 
 interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: string[];
   disabledOption: string;
   value: string | undefined;
+  isValid: boolean | undefined;
 }
 
-function Selector({ options = [], disabledOption, value, ...props }: IProps) {
+function Selector({
+  options = [],
+  disabledOption,
+  value,
+  isValid,
+  ...props
+}: IProps) {
+  const validateMode = useSelector((state) => state.common.validateMode);
+
   return (
     <div css={container}>
-      <select {...props} value={value}>
+      <select
+        value={value}
+        className={`
+          ${isValid ? "isValid" : ""}
+          ${validateMode ? "validateMode" : ""}
+        `}
+        {...props}
+      >
         <option value={disabledOption} disabled>
           {disabledOption}
         </option>
@@ -47,6 +64,16 @@ const container = css`
 
     &:focus {
       border-color: ${palette.dark_cyan};
+    }
+
+    &.validateMode {
+      border-color: ${palette.tawny} !important;
+      background-color: ${palette.snow};
+    }
+
+    &.validateMode.isValid {
+      border-color: ${palette.dark_cyan} !important;
+      background-color: white;
     }
   }
 `;
