@@ -16,7 +16,7 @@ import {
   signUpModalBirthdayMonthSelector,
   signUpModalBirthdaySelectors,
   signUpModalBirthdayYearSelector,
-  SignUpModalContainer,
+  signUpModalContainer,
   signUpModalSetLogin,
   signUpModalSubmitButtonWrapper,
 } from "./styles";
@@ -177,7 +177,7 @@ function SignUpModal({ closeModal }: IProps) {
   };
 
   return (
-    <form css={SignUpModalContainer} onSubmit={onSubmit}>
+    <form css={signUpModalContainer} onSubmit={onSubmit}>
       <CloseXIcon css={modalCloseXIcon} onClick={closeModal} />
       <div css={inputWrapper}>
         <Input

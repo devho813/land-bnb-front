@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import palette from "../../styles/palette";
 
-export const SignUpModalContainer = css`
+export const signUpModalContainer = css`
   width: 568px;
   padding: 32px;
   background-color: white;

@@ -1,27 +1,26 @@
-import { useEffect, useRef } from "react";
-import { useState } from "react";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { css } from "@emotion/react";
 
 interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 function useModal() {
   const [modalOpened, setModalOpened] = useState(false);
 
   const openModal = () => {
-    setModalOpened(true)
-  }
+    setModalOpened(true);
+  };
 
   const closeModal = () => {
-    setModalOpened(false)
-  }
+    setModalOpened(false);
+  };
 
   const ModalPortal = ({ children }: IProps) => {
     const ref = useRef<Element | null>();
     const [mounted, setMounted] = useState(false);
-  
+
     useEffect(() => {
       setMounted(true);
       if (document) {
@@ -29,7 +28,7 @@ function useModal() {
         ref.current = dom;
       }
     }, []);
-  
+
     if (ref.current && mounted && modalOpened) {
       return createPortal(
         <div css={modalPortalContainer}>
@@ -39,15 +38,15 @@ function useModal() {
         ref.current
       );
     }
-  
+
     return null;
-  }
+  };
 
   return {
     openModal,
     closeModal,
-    ModalPortal
-  }
+    ModalPortal,
+  };
 }
 
 export default useModal;
