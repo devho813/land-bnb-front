@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   container,
@@ -15,6 +15,7 @@ import OpenedEyeIcon from "../../../public/assets/opened_eye.svg";
 import Input from "../common/Input";
 import Button from "../common/Button";
 import { authActions } from "../../store/auth";
+import useValidateMode from "../../hooks/useValidateMode";
 
 interface IProps {
   closeModal: () => void;
@@ -27,6 +28,12 @@ function LoginModal({ closeModal }: IProps) {
   const [isPasswordHided, setIsPasswordHided] = useState(true);
 
   const dispatch = useDispatch();
+  const { setValidateMode } = useValidateMode();
+
+  useEffect(() => {
+    setValidateMode(false);
+    return () => {};
+  }, []);
 
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -40,12 +47,17 @@ function LoginModal({ closeModal }: IProps) {
     setIsPasswordHided((prevState) => !prevState);
   };
 
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setValidateMode(true);
+  };
+
   const onClickSignUpButton = () => {
     dispatch(authActions.setAuthMode("SIGN_UP"));
   };
 
   return (
-    <form css={container}>
+    <form css={container} onSubmit={onSubmit}>
       <CloseXIcon css={modalCloseXIcon} onClick={closeModal} />
       <div css={loginInputWrapper}>
         <Input
