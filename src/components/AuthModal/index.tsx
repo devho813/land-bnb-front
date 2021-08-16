@@ -1,4 +1,5 @@
 import { useSelector } from "../../store";
+import LoginModal from "../LoginModal";
 import SignUpModal from "../SignUpModal";
 
 interface IProps {
@@ -10,7 +11,7 @@ function AuthModal({ closeModal }: IProps) {
 
   return (
     <>
-      {authMode === "SIGN_IN" && <div>로그인</div>}
+      {authMode === "SIGN_IN" && <LoginModal closeModal={closeModal} />}
       {authMode === "SIGN_UP" && <SignUpModal closeModal={closeModal} />}
     </>
   );

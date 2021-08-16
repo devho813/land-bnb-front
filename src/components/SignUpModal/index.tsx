@@ -33,6 +33,7 @@ import { signupAPI } from "../../lib/api/auth";
 import { userActions } from "../../store/user";
 import useValidateMode from "../../hooks/useValidateMode";
 import PasswordWarning from "../PasswordWarning";
+import { authActions } from "../../store/auth";
 
 const PASSWORD_MIN_LENGTH = 8;
 
@@ -176,6 +177,10 @@ function SignUpModal({ closeModal }: IProps) {
     return null;
   };
 
+  const onClickLoginButton = () => {
+    dispatch(authActions.setAuthMode("SIGN_IN"));
+  };
+
   return (
     <form css={signUpModalContainer} onSubmit={onSubmit}>
       <CloseXIcon css={modalCloseXIcon} onClick={closeModal} />
@@ -299,7 +304,7 @@ function SignUpModal({ closeModal }: IProps) {
 
       <p>
         이미 에어비앤비 계정이 있나요?
-        <span css={signUpModalSetLogin} role="presentation" onClick={() => {}}>
+        <span css={signUpModalSetLogin} role="presentation" onClick={onClickLoginButton}>
           로그인
         </span>
         `
