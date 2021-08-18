@@ -18,10 +18,17 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-App.getInitialProps = async (context: AppContext) => {
-  const appInitialProps: AppInitialProps = await App.getInitialProps(context);
-  const cookieObject = cookieStringToObject(context.ctx.req?.headers.cookie);
-  const { store } = context.ctx;
+App.getInitialProps = async ({
+  ctx,
+  Component,
+}: AppContext): Promise<AppInitialProps> => {
+  let pageProps = {};
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+
+  const cookieObject = cookieStringToObject(ctx.req?.headers.cookie);
+  const { store } = ctx;
   const { isLogged } = store.getState().user;
 
   try {
@@ -34,7 +41,7 @@ App.getInitialProps = async (context: AppContext) => {
     console.error(error);
   }
 
-  return { ...appInitialProps };
+  return { pageProps };
 };
 
 export default wrapper.withRedux(App);
