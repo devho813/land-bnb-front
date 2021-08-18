@@ -5,4 +5,4 @@ export type UserType = {
   lastname: string;
   birthday: string;
   profileImage: string;
-}
+};

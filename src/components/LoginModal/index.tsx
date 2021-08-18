@@ -16,6 +16,8 @@ import Input from "../common/Input";
 import Button from "../common/Button";
 import { authActions } from "../../store/auth";
 import useValidateMode from "../../hooks/useValidateMode";
+import { loginAPI } from "../../lib/api/auth";
+import { userActions } from "../../store/user";
 
 interface IProps {
   closeModal: () => void;
@@ -31,8 +33,9 @@ function LoginModal({ closeModal }: IProps) {
   const { setValidateMode } = useValidateMode();
 
   useEffect(() => {
-    setValidateMode(false);
-    return () => {};
+    return () => {
+      setValidateMode(false);
+    };
   }, []);
 
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +53,19 @@ function LoginModal({ closeModal }: IProps) {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setValidateMode(true);
+
+    const loginBody = {
+      email,
+      password,
+    };
+
+    try {
+      const { data } = await loginAPI(loginBody);
+      dispatch(userActions.setLoggedUser(data));
+      closeModal();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onClickSignUpButton = () => {
