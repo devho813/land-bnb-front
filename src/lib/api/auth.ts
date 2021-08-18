@@ -23,3 +23,8 @@ export const signupAPI = (body: SignUpAPIBody) => {
 export const loginAPI = (body: LoginAPIBody) => {
   return apiClient.post<UserType>("/api/auth/signin", body);
 };
+
+// 사용자 정보 api
+export const meAPI = () => {
+  return apiClient.get<UserType>("/api/auth/me");
+};
