@@ -28,3 +28,8 @@ export const loginAPI = (body: LoginAPIBody) => {
 export const meAPI = () => {
   return apiClient.get<UserType>("/api/auth/me");
 };
+
+// 로그아웃 api
+export const logoutAPI = () => {
+  return apiClient.delete("/api/auth/logout");
+};

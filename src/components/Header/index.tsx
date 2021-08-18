@@ -20,6 +20,8 @@ import {
   userMenu,
   userMenuDivider,
 } from "./styles";
+import { logoutAPI } from "../../lib/api/auth";
+import { userActions } from "../../store/user";
 
 function Header() {
   const { openModal, closeModal, ModalPortal } = useModal();
@@ -35,6 +37,15 @@ function Header() {
 
   const onClickRoomRegister = () => {
     setIsUserMenuOpened(false);
+  };
+
+  const logout = async () => {
+    try {
+      await logoutAPI();
+      dispatch(userActions.initUser());
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -60,7 +71,9 @@ function Header() {
                 </a>
               </Link>
               <div css={userMenuDivider} />
-              <li>로그아웃</li>
+              <li onClick={logout} role="presentation">
+                로그아웃
+              </li>
             </ul>
           )}
         </OutsideClickHandler>
