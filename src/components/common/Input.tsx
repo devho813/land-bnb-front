@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React from "react";
+import React, { memo } from "react";
 import useValidateMode from "../../hooks/useValidateMode";
 import palette from "../../styles/palette";
 
@@ -35,7 +35,7 @@ function Input({
   );
 }
 
-export default Input;
+export default memo(Input);
 
 const container = css`
   &.useValidation {

@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes, memo, ReactNode } from "react";
 import palette from "../../styles/palette";
 
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,7 +14,7 @@ function Button({ children, ...props }: IProps) {
   );
 }
 
-export default Button;
+export default memo(Button);
 
 const container = css`
   width: 100%;

@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import React from "react";
+import React, { memo } from "react";
 import { useSelector } from "../../store";
 import palette from "../../styles/palette";
 
@@ -42,7 +42,7 @@ function Selector({
   );
 }
 
-export default Selector;
+export default memo(Selector);
 
 const container = css`
   width: 100%;
