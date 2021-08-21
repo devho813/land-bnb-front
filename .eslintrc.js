@@ -45,6 +45,7 @@ module.exports = {
     "no-invalid-css": "off",
     "no-confusing-arrow": "off",
     "react/jsx-curly-newline": "off",
+    "react/require-default-props": "off",
     indent: "off",
     "react/jsx-filename-extension": [
       1,
