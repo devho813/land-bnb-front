@@ -16,3 +16,8 @@ export const container = css`
     margin-bottom: 6px;
   }
 `;
+
+export const registerRoomBuildingSelectorWrapper = css`
+  width: 320px;
+  margin-bottom: 32px;
+`;
