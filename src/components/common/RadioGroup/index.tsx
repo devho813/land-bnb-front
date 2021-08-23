@@ -7,14 +7,15 @@ import {
   radioListWrapper,
 } from "./styles";
 import WarningIcon from "../../../../public/assets/warning.svg";
+import { RoomType } from "../../../types/registerRoom";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   isValid?: boolean;
   errorMessage?: string;
-  options?: { label: string; value: string; description?: string }[];
-  value?: string;
-  onChangeRadio?: (value: string) => () => void
+  options?: { label: string; value: RoomType; description?: string }[];
+  value?: RoomType;
+  onChangeRadio?: (value: RoomType) => () => void
 }
 
 function RadioGroup({

@@ -6,16 +6,23 @@ import {
   boutiquesHotelBuildingTypeList,
   houseBuildingTypeList,
   largeBuildingTypeList,
+  roomTypeRadioOptions,
   secondaryUnitBuildingTypeList,
   uniqueSpaceBuildingTypeList,
 } from "../../../lib/staticData";
 import { useSelector } from "../../../store";
 import { registerRoomActions } from "../../../store/registerRoom";
+import { RoomType } from "../../../types/registerRoom";
+import RadioGroup from "../../common/RadioGroup";
 import Selector from "../../common/Selector";
-import { container, registerRoomBuildingSelectorWrapper } from "./styles";
+import {
+  container,
+  registerRoomBuildingSelectorWrapper,
+  registerRoomTypeRadio,
+} from "./styles";
 
 function RegisterRoomBuilding() {
-  const { buildingType, largeBuildingType } = useSelector(
+  const { buildingType, largeBuildingType, roomType } = useSelector(
     (state) => state.registerRoom
   );
   const dispatch = useDispatch();
@@ -23,22 +30,30 @@ function RegisterRoomBuilding() {
   const detailBuildingOptions = useMemo(() => {
     switch (largeBuildingType) {
       case "아파트":
-        dispatch(registerRoomActions.setBuildingType(apartmentBuildingTypeList[0]));
+        dispatch(
+          registerRoomActions.setBuildingType(apartmentBuildingTypeList[0])
+        );
         return apartmentBuildingTypeList;
       case "공동주택":
         dispatch(registerRoomActions.setBuildingType(houseBuildingTypeList[0]));
         return houseBuildingTypeList;
       case "별채":
-        dispatch(registerRoomActions.setBuildingType(secondaryUnitBuildingTypeList[0]));
+        dispatch(
+          registerRoomActions.setBuildingType(secondaryUnitBuildingTypeList[0])
+        );
         return secondaryUnitBuildingTypeList;
       case "독특한 숙소":
-        dispatch(registerRoomActions.setBuildingType(uniqueSpaceBuildingTypeList[0]));
+        dispatch(
+          registerRoomActions.setBuildingType(uniqueSpaceBuildingTypeList[0])
+        );
         return uniqueSpaceBuildingTypeList;
       case "B&B":
         dispatch(registerRoomActions.setBuildingType(bnbBuildingTypeList[0]));
         return bnbBuildingTypeList;
       case "부티크호텔":
-        dispatch(registerRoomActions.setBuildingType(boutiquesHotelBuildingTypeList[0]));
+        dispatch(
+          registerRoomActions.setBuildingType(boutiquesHotelBuildingTypeList[0])
+        );
         return boutiquesHotelBuildingTypeList;
       default:
         return [];
@@ -51,6 +66,10 @@ function RegisterRoomBuilding() {
 
   const onChangeBuildingType = (e: ChangeEvent<HTMLSelectElement>) => {
     dispatch(registerRoomActions.setBuildingType(e.target.value));
+  };
+
+  const onChangeRoomType = (value: RoomType) => () => {
+    dispatch(registerRoomActions.setRoomType(value));
   };
 
   return (
@@ -78,6 +97,16 @@ function RegisterRoomBuilding() {
           onChange={onChangeBuildingType}
         />
       </div>
+      {buildingType && (
+        <div css={registerRoomTypeRadio}>
+          <RadioGroup
+            label="게스트가 묵게 될 숙소 유형을 골라주세요."
+            value={roomType || undefined}
+            options={roomTypeRadioOptions}
+            onChangeRadio={onChangeRoomType}
+          />
+        </div>
+      )}
     </div>
   );
 }

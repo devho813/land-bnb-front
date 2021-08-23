@@ -21,3 +21,8 @@ export const registerRoomBuildingSelectorWrapper = css`
   width: 320px;
   margin-bottom: 32px;
 `;
+
+export const registerRoomTypeRadio = css`
+  max-width: 485px;
+  margin-bottom: 50px;
+`;

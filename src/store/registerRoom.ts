@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RoomType } from "../types/registerRoom";
 
 type RegisterRoomState = {
   largeBuildingType: string | null;
   buildingType: string | null;
-  roomType: string | null;
+  roomType: RoomType | null;
   isSetUpForGuest: string | null;
 };
 
@@ -24,6 +25,10 @@ const registerRoom = createSlice({
     },
     setBuildingType(state, action: PayloadAction<string>) {
       state.buildingType = action.payload;
+      return state;
+    },
+    setRoomType(state, action: PayloadAction<RoomType>) {
+      state.roomType = action.payload;
       return state;
     },
   },
