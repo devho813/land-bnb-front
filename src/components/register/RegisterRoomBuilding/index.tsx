@@ -5,6 +5,7 @@ import {
   bnbBuildingTypeList,
   boutiquesHotelBuildingTypeList,
   houseBuildingTypeList,
+  isSetUpForGuestOptions,
   largeBuildingTypeList,
   roomTypeRadioOptions,
   secondaryUnitBuildingTypeList,
@@ -12,17 +13,17 @@ import {
 } from "../../../lib/staticData";
 import { useSelector } from "../../../store";
 import { registerRoomActions } from "../../../store/registerRoom";
-import { RoomType } from "../../../types/registerRoom";
 import RadioGroup from "../../common/RadioGroup";
 import Selector from "../../common/Selector";
 import {
   container,
   registerRoomBuildingSelectorWrapper,
+  registerRoomIsSetupForGuestRadio,
   registerRoomTypeRadio,
 } from "./styles";
 
 function RegisterRoomBuilding() {
-  const { buildingType, largeBuildingType, roomType } = useSelector(
+  const { buildingType, largeBuildingType, roomType, isSetUpForGuest } = useSelector(
     (state) => state.registerRoom
   );
   const dispatch = useDispatch();
@@ -68,8 +69,12 @@ function RegisterRoomBuilding() {
     dispatch(registerRoomActions.setBuildingType(e.target.value));
   };
 
-  const onChangeRoomType = (value: RoomType) => () => {
+  const onChangeRoomType = (value: any) => () => {
     dispatch(registerRoomActions.setRoomType(value));
+  };
+
+  const onChangeIsSetUpForGuest = (value: any) => () => {
+    dispatch(registerRoomActions.setIsSetUpForGuest(value));
   };
 
   return (
@@ -107,6 +112,14 @@ function RegisterRoomBuilding() {
           />
         </div>
       )}
+      <div css={registerRoomIsSetupForGuestRadio}>
+        <RadioGroup
+          label="게스트만 사용하도록 만들어진 숙소인가요?"
+          value={isSetUpForGuest}
+          onChange={onChangeIsSetUpForGuest}
+          options={isSetUpForGuestOptions}
+        />
+      </div>
     </div>
   );
 }

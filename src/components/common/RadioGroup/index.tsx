@@ -7,15 +7,14 @@ import {
   radioListWrapper,
 } from "./styles";
 import WarningIcon from "../../../../public/assets/warning.svg";
-import { RoomType } from "../../../types/registerRoom";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   isValid?: boolean;
   errorMessage?: string;
-  options?: { label: string; value: RoomType; description?: string }[];
-  value?: RoomType;
-  onChangeRadio?: (value: RoomType) => () => void
+  options?: { label: string; value: any; description?: string }[];
+  value?: any;
+  onChangeRadio?: (value: any) => () => void
 }
 
 function RadioGroup({
@@ -41,7 +40,7 @@ function RadioGroup({
             />
             <span>
               {option.label}
-              <span css={radioDescription}>{option.description}</span>
+              {option.description && <span css={radioDescription}>{option.description}</span>}
             </span>
           </label>
         ))}

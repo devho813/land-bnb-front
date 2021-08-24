@@ -26,3 +26,7 @@ export const registerRoomTypeRadio = css`
   max-width: 485px;
   margin-bottom: 50px;
 `;
+
+export const registerRoomIsSetupForGuestRadio = css`
+  margin-bottom: 50px;
+`;

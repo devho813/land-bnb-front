@@ -117,7 +117,7 @@ export const boutiquesHotelBuildingTypeList = [
 
 export const roomTypeRadioOptions: {
   label: string;
-  value: RoomType;
+  value: "entire" | "private" | "public";
   description: string;
 }[] = [
   {
@@ -138,4 +138,9 @@ export const roomTypeRadioOptions: {
     description:
       "게스트는 개인 공간 없이, 다른 사람과 함께 쓰는 침실이나 공용 공간에서 숙박합니다.",
   },
+];
+
+export const isSetUpForGuestOptions = [
+  { label: "예. 게스트용으로 따로 마련된 숙소입니다.", value: true },
+  { label: "아니요. 제 개인 물건이 숙소에 있습니다.", value: false },
 ];
