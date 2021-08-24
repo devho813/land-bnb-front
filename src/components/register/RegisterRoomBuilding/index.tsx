@@ -15,6 +15,7 @@ import { useSelector } from "../../../store";
 import { registerRoomActions } from "../../../store/registerRoom";
 import RadioGroup from "../../common/RadioGroup";
 import Selector from "../../common/Selector";
+import RegisterRoomFooter from "../RegisterRoomFooter";
 import {
   container,
   registerRoomBuildingSelectorWrapper,
@@ -23,10 +24,22 @@ import {
 } from "./styles";
 
 function RegisterRoomBuilding() {
-  const { buildingType, largeBuildingType, roomType, isSetUpForGuest } = useSelector(
-    (state) => state.registerRoom
-  );
+  const { buildingType, largeBuildingType, roomType, isSetUpForGuest } =
+    useSelector((state) => state.registerRoom);
   const dispatch = useDispatch();
+
+  const isValid = useMemo(() => {
+    if (
+      !largeBuildingTypeList ||
+      !buildingType ||
+      !roomType ||
+      isSetUpForGuest === null
+    ) {
+      return false;
+    }
+
+    return true;
+  }, [buildingType, largeBuildingType, roomType, isSetUpForGuest]);
 
   const detailBuildingOptions = useMemo(() => {
     switch (largeBuildingType) {
@@ -89,6 +102,7 @@ function RegisterRoomBuilding() {
           options={largeBuildingTypeList}
           disabledOption="하나를 선택해주세요."
           onChange={onChangeLargeBuildingType}
+          isValid={!!largeBuildingType}
         />
       </div>
       <div css={registerRoomBuildingSelectorWrapper}>
@@ -100,6 +114,7 @@ function RegisterRoomBuilding() {
           options={detailBuildingOptions}
           disabledOption="아파트"
           onChange={onChangeBuildingType}
+          isValid={!!buildingType}
         />
       </div>
       {buildingType && (
@@ -109,6 +124,7 @@ function RegisterRoomBuilding() {
             value={roomType || undefined}
             options={roomTypeRadioOptions}
             onChangeRadio={onChangeRoomType}
+            isValid={!!roomType}
           />
         </div>
       )}
@@ -118,8 +134,14 @@ function RegisterRoomBuilding() {
           value={isSetUpForGuest}
           onChange={onChangeIsSetUpForGuest}
           options={isSetUpForGuestOptions}
+          isValid={isSetUpForGuest !== null}
         />
       </div>
+      <RegisterRoomFooter
+        isValid={isValid}
+        prevHref="/"
+        nextHref="/room/register/bedrooms"
+      />
     </div>
   );
 }

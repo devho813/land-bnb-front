@@ -3,12 +3,18 @@ import { ButtonHTMLAttributes, memo, ReactNode } from "react";
 import palette from "../../styles/palette";
 
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  color?: string;
   children: ReactNode;
 }
 
-function Button({ children, ...props }: IProps) {
+function Button({ color = "dark_cyan", children, ...props }: IProps) {
   return (
-    <button type="button" css={container} {...props}>
+    <button
+      type="button"
+      css={container}
+      className={color}
+      {...props}
+    >
       {children}
     </button>
   );
@@ -27,4 +33,8 @@ const container = css`
   font-weight: 800;
   outline: none;
   cursor: pointer;
+
+  &.dark_cyan {
+    background-color: ${palette.dark_cyan};
+  }
 `;
