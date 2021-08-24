@@ -14,7 +14,7 @@ interface IProps {
   value: number;
   minValue: number;
   increaseNum: number;
-  onChangeCounter: (value: number) => () => void
+  onChangeCount: (value: number) => () => void
 }
 
 function Counter({
@@ -23,7 +23,7 @@ function Counter({
   value = 1,
   minValue = 0,
   increaseNum = 1,
-  onChangeCounter,
+  onChangeCount,
 }: IProps) {
   return (
     <div css={container}>
@@ -35,12 +35,12 @@ function Counter({
         <button
           type="button"
           disabled={value === minValue}
-          onClick={onChangeCounter(value - increaseNum)}
+          onClick={onChangeCount(value - increaseNum)}
         >
           <CounterMinusIcon />
         </button>
         <p>{value}</p>
-        <button type="button" onClick={onChangeCounter(value + increaseNum)}>
+        <button type="button" onClick={onChangeCount(value + increaseNum)}>
           <CounterPlusIcon />
         </button>
       </div>

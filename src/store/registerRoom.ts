@@ -54,6 +54,10 @@ const registerRoom = createSlice({
       state.bedRoomCount = getNumber(action.payload) || 0;
       return state;
     },
+    setBedCount(state, action: PayloadAction<number>) {
+      state.bedCount = action.payload;
+      return state;
+    },
   },
 });
 

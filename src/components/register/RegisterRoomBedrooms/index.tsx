@@ -7,23 +7,28 @@ import Counter from "../../common/Counter";
 import Selector from "../../common/Selector";
 import {
   container,
+  registerRoomBedCountWrapper,
   registerRoomBedroomCountWrapper,
   registerRoomMaximumGuestCountWrapper,
   roomRegisterStepInfo,
 } from "./styles";
 
 function RegisterRoomBedrooms() {
-  const { maximumGuestCount, bedRoomCount } = useSelector(
+  const { maximumGuestCount, bedRoomCount, bedCount } = useSelector(
     (state) => state.registerRoom
   );
   const dispatch = useDispatch();
 
-  const onChangeCounter = (value: number) => () => {
+  const onChangeMaximumGuestCounter = (value: number) => () => {
     dispatch(registerRoomActions.setMaximumGuestCount(value));
   };
 
   const onChangeBedroomCount = (e: ChangeEvent<HTMLSelectElement>) => () => {
     dispatch(registerRoomActions.setBedRoomCount(e.target.value));
+  };
+
+  const onChangeBedCount = (value: number) => () => {
+    dispatch(registerRoomActions.setBedCount(value));
   };
 
   return (
@@ -40,7 +45,7 @@ function RegisterRoomBedrooms() {
           label="최대 숙박 인원"
           minValue={1}
           value={maximumGuestCount}
-          onChangeCounter={onChangeCounter}
+          onChangeCount={onChangeMaximumGuestCounter}
           increaseNum={1}
         />
       </div>
@@ -52,6 +57,15 @@ function RegisterRoomBedrooms() {
           label="게스트가 사용할 수 있는 침실은 몇 개인가요?"
           options={bedroomCountList}
           disabledOption="침실 개수"
+        />
+      </div>
+      <div css={registerRoomBedCountWrapper}>
+        <Counter
+          label="침대"
+          value={bedCount}
+          onChangeCount={onChangeBedCount}
+          minValue={1}
+          increaseNum={1}
         />
       </div>
     </div>
