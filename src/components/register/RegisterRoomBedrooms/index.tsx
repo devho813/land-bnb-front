@@ -1,17 +1,29 @@
+import { ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
+import { bedroomCountList } from "../../../lib/staticData";
 import { useSelector } from "../../../store";
 import { registerRoomActions } from "../../../store/registerRoom";
 import Counter from "../../common/Counter";
-import { container, registerRoomMaximumGuestCountWrapper, roomRegisterStepInfo } from "./styles";
+import Selector from "../../common/Selector";
+import {
+  container,
+  registerRoomBedroomCountWrapper,
+  registerRoomMaximumGuestCountWrapper,
+  roomRegisterStepInfo,
+} from "./styles";
 
 function RegisterRoomBedrooms() {
-  const maximumGuestCounter = useSelector(
-    (state) => state.registerRoom.maximumGuestCount
+  const { maximumGuestCount, bedRoomCount } = useSelector(
+    (state) => state.registerRoom
   );
   const dispatch = useDispatch();
 
   const onChangeCounter = (value: number) => () => {
     dispatch(registerRoomActions.setMaximumGuestCount(value));
+  };
+
+  const onChangeBedroomCount = (e: ChangeEvent<HTMLSelectElement>) => () => {
+    dispatch(registerRoomActions.setBedRoomCount(e.target.value));
   };
 
   return (
@@ -27,9 +39,19 @@ function RegisterRoomBedrooms() {
         <Counter
           label="최대 숙박 인원"
           minValue={1}
-          value={maximumGuestCounter}
+          value={maximumGuestCount}
           onChangeCounter={onChangeCounter}
           increaseNum={1}
+        />
+      </div>
+      <div css={registerRoomBedroomCountWrapper}>
+        <Selector
+          type="register"
+          value={`침실 ${bedRoomCount}개`}
+          onChange={onChangeBedroomCount}
+          label="게스트가 사용할 수 있는 침실은 몇 개인가요?"
+          options={bedroomCountList}
+          disabledOption="침실 개수"
         />
       </div>
     </div>

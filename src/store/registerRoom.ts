@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BedType } from "../types/room";
+import { getNumber } from "../utils";
 
 type RegisterRoomState = {
   largeBuildingType: string | null;
@@ -47,6 +48,10 @@ const registerRoom = createSlice({
     },
     setMaximumGuestCount(state, action: PayloadAction<number>) {
       state.maximumGuestCount = action.payload;
+      return state;
+    },
+    setBedRoomCount(state, action: PayloadAction<string>) {
+      state.bedRoomCount = getNumber(action.payload) || 0;
       return state;
     },
   },

@@ -28,3 +28,8 @@ export const registerRoomMaximumGuestCountWrapper = css`
   margin-top: 24px;
   margin-bottom: 32px;
 `;
+
+export const registerRoomBedroomCountWrapper = css`
+  width: 320px;
+  margin-bottom: 32px;
+`;

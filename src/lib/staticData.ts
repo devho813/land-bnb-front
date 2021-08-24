@@ -1,5 +1,3 @@
-import { RoomType } from "../types/registerRoom";
-
 export const monthList = [
   "1월",
   "2월",
@@ -15,8 +13,8 @@ export const monthList = [
   "12월",
 ];
 
-export const dayList = Array.from({ length: 31 }, (v, i) => `${i + 1}일`);
-export const yearList = Array.from({ length: 121 }, (v, i) => `${i + 1900}년`);
+export const dayList = Array.from({ length: 31 }, (_, i) => `${i + 1}일`);
+export const yearList = Array.from({ length: 121 }, (_, i) => `${i + 1900}년`);
 export const largeBuildingTypeList = [
   "아파트",
   "주택",
@@ -144,3 +142,8 @@ export const isSetUpForGuestOptions = [
   { label: "예. 게스트용으로 따로 마련된 숙소입니다.", value: true },
   { label: "아니요. 제 개인 물건이 숙소에 있습니다.", value: false },
 ];
+
+export const bedroomCountList = Array.from(
+  { length: 16 },
+  (_, i) => `침실 ${i}개`
+);

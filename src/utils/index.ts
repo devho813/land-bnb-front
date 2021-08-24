@@ -9,3 +9,13 @@ export const cookieStringToObject = (cookieString?: string) => {
   }
   return cookies;
 };
+
+// string에서 number만 return하는 함수
+export const getNumber = (string: string) => {
+  const stringNumber = string.replace(/[^0-9]/g, "");
+  if (stringNumber) {
+    return Number(stringNumber);
+  }
+
+  return null;
+};
