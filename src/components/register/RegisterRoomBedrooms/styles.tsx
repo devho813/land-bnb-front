@@ -22,3 +22,9 @@ export const roomRegisterStepInfo = css`
   max-width: 400px;
   word-break: keep-all;
 `;
+
+export const registerRoomMaximumGuestCountWrapper = css`
+  width: 320px;
+  margin-top: 24px;
+  margin-bottom: 32px;
+`;
