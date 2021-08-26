@@ -9,6 +9,7 @@ import {
   container,
   registerRoomBedCountWrapper,
   registerRoomBedroomCountWrapper,
+  registerRoomBedTypeInfo,
   registerRoomMaximumGuestCountWrapper,
   roomRegisterStepInfo,
 } from "./styles";
@@ -68,6 +69,11 @@ function RegisterRoomBedrooms() {
           increaseNum={1}
         />
       </div>
+      <h4>침대 유형</h4>
+      <p css={registerRoomBedTypeInfo}>
+        각 침실에 놓인 침대 유형을 명시하면 숙소에 침대가 어떻게 구비되어 있는지
+        게스트가 잘 파악할 수 있습니다.
+      </p>
     </div>
   );
 }

@@ -38,3 +38,10 @@ export const registerRoomBedCountWrapper = css`
   width: 320px;
   margin-bottom: 57px;
 `;
+
+export const registerRoomBedTypeInfo = css`
+  margin-top: 6px;
+  margin-bottom: 20px;
+  max-width: 400px;
+  word-break: keep-all;
+`;
