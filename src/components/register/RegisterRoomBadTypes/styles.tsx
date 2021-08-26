@@ -31,3 +31,12 @@ export const registerRoomBedTypeSelectorWrapper = css`
 `;
 
 export const registerRoomBedTypeBedroomCounts = css``;
+export const registerRoomBedTypeCounters = css`
+  width: 320px;
+  margin-top: 28px;
+`;
+
+export const registerRoomBedTypeCounter = css`
+  width: 290px;
+  margin-bottom: 18px;
+`;

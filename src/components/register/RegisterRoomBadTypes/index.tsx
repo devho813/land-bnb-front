@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
+import { bedTypes } from "../../../lib/staticData";
+import { registerRoomActions } from "../../../store/registerRoom";
 import { BedType } from "../../../types/room";
 import Button from "../../common/Button";
+import Counter from "../../common/Counter";
 import Selector from "../../common/Selector";
 import {
   container,
   registerRoomBedTypeBedroom,
   registerRoomBedTypeBedroomCounts,
   registerRoomBedTypeBedroomText,
+  registerRoomBedTypeCounter,
+  registerRoomBedTypeCounters,
   registerRoomBedTypeSelectorWrapper,
   registerRoomBedTypeTop,
 } from "./styles";
@@ -17,9 +23,22 @@ interface IProps {
 
 function RegisterRoomBadTypes({ bedRoom }: IProps) {
   const [opened, setOpened] = useState(false);
+  const [activeBedOptions, setActiveBedOptions] = useState<BedType[]>([]);
+  const dispatch = useDispatch();
+
+  const lastBedOptions = useMemo(() => {
+    return bedTypes.filter((bedType) => !activeBedOptions.includes(bedType));
+  }, [activeBedOptions]);
 
   const toggleOpened = () => {
     setOpened((prevState) => !prevState);
+  };
+
+  const onChangeSelector = (e: ChangeEvent<HTMLSelectElement>) => {
+    setActiveBedOptions((prevState) => [
+      ...prevState,
+      e.target.value as BedType,
+    ]);
   };
 
   return (
@@ -39,13 +58,38 @@ function RegisterRoomBadTypes({ bedRoom }: IProps) {
         </Button>
       </div>
       {opened && (
+        <div css={registerRoomBedTypeCounters}>
+          {activeBedOptions.map((type) => (
+            <div css={registerRoomBedTypeCounter} key={type}>
+              <Counter
+                label={type}
+                value={
+                  bedRoom.beds.find((bed) => bed.type === type)?.count || 0
+                }
+                onChangeCount={(value: number) => () => {
+                  dispatch(
+                    registerRoomActions.setBedTypeCount({
+                      bedroomId: bedRoom.id,
+                      type,
+                      count: value,
+                    })
+                  );
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+      {opened && (
         <div css={registerRoomBedTypeSelectorWrapper}>
           <Selector
             type="register"
             defaultValue="다른 침대 추가"
             value="다른 침대 추가"
             disabledOption="다른 침대 추가"
-            options={["다른 침대 추가"]}
+            options={lastBedOptions}
+            useValidation
+            onChange={onChangeSelector}
           />
         </div>
       )}

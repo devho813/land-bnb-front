@@ -70,6 +70,25 @@ const registerRoom = createSlice({
       state.bedCount = action.payload;
       return state;
     },
+    setBedTypeCount(
+      state,
+      action: PayloadAction<{ bedroomId: number; type: BedType; count: number }>
+    ) {
+      const { bedroomId, count, type } = action.payload;
+      const bedroom = state.bedList[bedroomId - 1];
+      const prevBeds = bedroom.beds;
+      const index = prevBeds.findIndex((bed) => bed.type === type);
+      if (index === -1) {
+        state.bedList[bedroomId - 1].beds = [...prevBeds, { type, count }];
+        return state;
+      }
+      if (count === 0) {
+        state.bedList[bedroomId - 1].beds.splice(index, 1);
+      } else {
+        state.bedList[bedroomId - 1].beds[index].count = count;
+      }
+      return state;
+    },
   },
 });
 

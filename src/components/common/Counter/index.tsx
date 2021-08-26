@@ -12,8 +12,8 @@ interface IProps {
   label?: string;
   description?: string;
   value: number;
-  minValue: number;
-  increaseNum: number;
+  minValue?: number;
+  increaseNum?: number;
   onChangeCount: (value: number) => () => void
 }
 
