@@ -1,9 +1,10 @@
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import React, { memo } from "react";
 import useValidateMode from "../../../hooks/useValidateMode";
 import { container, inputErrorMessage, inputIconWrapper } from "./styles";
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  icon?: Element;
+  icon?: ReactJSXElement;
   isValid?: boolean;
   useValidation?: boolean;
   errorMessage?: string;

@@ -1,3 +1,4 @@
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 import { ButtonHTMLAttributes, memo, ReactNode } from "react";
 import { container } from "../../LoginModal/styles";
 
@@ -6,7 +7,7 @@ interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   styleType?: "normal" | "register";
   colorReverse?: boolean;
-  icon?: Element;
+  icon?: ReactJSXElement;
 }
 
 function Button({
