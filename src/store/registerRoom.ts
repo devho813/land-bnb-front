@@ -12,6 +12,14 @@ type RegisterRoomState = {
   bedCount: number;
   bedList: Array<{ id: number; beds: Array<{ type: BedType; count: number }> }>;
   publicBedList: Array<{ type: BedType; count: number }>;
+  country: string;
+  city: string;
+  district: string;
+  streetAddress: string;
+  detailAddress: string;
+  postcode: string;
+  latitude: number;
+  longitude: number;
 };
 
 const initialState: RegisterRoomState = {
@@ -24,6 +32,14 @@ const initialState: RegisterRoomState = {
   bedCount: 1,
   bedList: [],
   publicBedList: [],
+  country: "", // 국가/지역
+  city: "", // 시/도
+  district: "", // 시/군/구
+  streetAddress: "", // 도로명주소
+  detailAddress: "", // 동호수(선택 사항)
+  postcode: "", // 우편번호
+  latitude: 0, // 위도
+  longitude: 0, // 경도
 };
 
 const registerRoom = createSlice({
@@ -87,6 +103,38 @@ const registerRoom = createSlice({
       } else {
         state.bedList[bedroomId - 1].beds[index].count = count;
       }
+      return state;
+    },
+    setCountry(state, action: PayloadAction<string>) {
+      state.country = action.payload;
+      return state;
+    },
+    setCity(state, action: PayloadAction<string>) {
+      state.city = action.payload;
+      return state;
+    },
+    setDistrict(state, action: PayloadAction<string>) {
+      state.district = action.payload;
+      return state;
+    },
+    setStreetAddress(state, action: PayloadAction<string>) {
+      state.streetAddress = action.payload;
+      return state;
+    },
+    setDetailAddress(state, action: PayloadAction<string>) {
+      state.detailAddress = action.payload;
+      return state;
+    },
+    setPostcode(state, action: PayloadAction<string>) {
+      state.postcode = action.payload;
+      return state;
+    },
+    setLatitude(state, action: PayloadAction<number>) {
+      state.latitude = action.payload;
+      return state;
+    },
+    setLongitude(state, action: PayloadAction<number>) {
+      state.longitude = action.payload;
       return state;
     },
   },
