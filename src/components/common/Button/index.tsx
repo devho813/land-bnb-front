@@ -8,6 +8,7 @@ interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   styleType?: "normal" | "register";
   colorReverse?: boolean;
   icon?: ReactJSXElement;
+  width?: string;
 }
 
 function Button({
@@ -16,6 +17,7 @@ function Button({
   styleType = "normal",
   colorReverse = false,
   icon,
+  width,
   ...props
 }: IProps) {
   return (
@@ -23,6 +25,7 @@ function Button({
       type="button"
       css={container}
       className={`${styleType} ${color} ${colorReverse ? "reverse" : ""}`}
+      style={{ width }}
       {...props}
     >
       {icon}
