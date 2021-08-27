@@ -30,7 +30,7 @@ function Selector({
   return (
     <div css={container} className={type}>
       <label>
-        {label && <span>label</span>}
+        {label && <span>{label}</span>}
         <select
           value={value}
           className={`

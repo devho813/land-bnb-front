@@ -299,7 +299,7 @@ function SignUpModal({ closeModal }: IProps) {
         </div>
       </div>
       <div css={signUpModalSubmitButtonWrapper}>
-        <Button type="submit">가입 하기</Button>
+        <Button type="submit" color="bittersweet">가입 하기</Button>
       </div>
 
       <p>

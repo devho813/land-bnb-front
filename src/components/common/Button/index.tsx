@@ -4,22 +4,27 @@ import { container } from "../../LoginModal/styles";
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: string;
   children: ReactNode;
-  styleType: "normal" | "register";
+  styleType?: "normal" | "register";
+  colorReverse?: boolean;
+  icon?: Element;
 }
 
 function Button({
   color = "dark_cyan",
   children,
   styleType = "normal",
+  colorReverse = false,
+  icon,
   ...props
 }: IProps) {
   return (
     <button
       type="button"
       css={container}
-      className={`${styleType} ${color}`}
+      className={`${styleType} ${color} ${colorReverse ? "reverse" : ""}`}
       {...props}
     >
+      {icon}
       {children}
     </button>
   );
