@@ -13,6 +13,7 @@ import Button from "../../common/Button";
 import { uploadFileAPI } from "../../../lib/api/file";
 import { registerRoomActions } from "../../../store/registerRoom";
 import RegisterRoomPhotoCardList from "../RegisterRoomPhotoCardList";
+import RegisterRoomFooter from "../RegisterRoomFooter";
 
 function RegisterRoomPhoto() {
   const photos = useSelector((state) => state.registerRoom.photos);
@@ -53,6 +54,10 @@ function RegisterRoomPhoto() {
         </div>
       )}
       {!isEmpty(photos) && <RegisterRoomPhotoCardList photos={photos} />}
+      <RegisterRoomFooter
+        prevHref="/room/register/conveniences"
+        nextHref="/room/register/description"
+      />
     </div>
   );
 }
