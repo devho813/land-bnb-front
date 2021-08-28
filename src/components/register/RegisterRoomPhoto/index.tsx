@@ -8,13 +8,24 @@ import {
 } from "./styles";
 import UploadIcon from "../../../../public/assets/upload.svg";
 import Button from "../../common/Button";
+import { uploadFileAPI } from "../../../lib/api/file";
 
 function RegisterRoomPhoto() {
   const photos = useSelector((state) => state.registerRoom.photos);
 
   const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
-    console.log(files);
+    if (files && files.length > 0) {
+      const file = files[0];
+      const formdata = new FormData();
+      formdata.append("file", file);
+
+      try {
+        await uploadFileAPI(formdata);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
