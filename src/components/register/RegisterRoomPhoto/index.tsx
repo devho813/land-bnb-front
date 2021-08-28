@@ -1,4 +1,6 @@
 import { ChangeEvent } from "react";
+import { useDispatch } from "react-redux";
+
 import { isEmpty } from "lodash";
 import { useSelector } from "../../../store";
 import {
@@ -9,9 +11,12 @@ import {
 import UploadIcon from "../../../../public/assets/upload.svg";
 import Button from "../../common/Button";
 import { uploadFileAPI } from "../../../lib/api/file";
+import { registerRoomActions } from "../../../store/registerRoom";
+import RegisterRoomPhotoCardList from "../RegisterRoomPhotoCardList";
 
 function RegisterRoomPhoto() {
   const photos = useSelector((state) => state.registerRoom.photos);
+  const dispatch = useDispatch();
 
   const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -21,7 +26,10 @@ function RegisterRoomPhoto() {
       formdata.append("file", file);
 
       try {
-        await uploadFileAPI(formdata);
+        const { data } = await uploadFileAPI(formdata);
+        if (data) {
+          dispatch(registerRoomActions.setPhotos(data));
+        }
       } catch (error) {
         console.error(error);
       }
@@ -44,6 +52,7 @@ function RegisterRoomPhoto() {
           </Button>
         </div>
       )}
+      {!isEmpty(photos) && <RegisterRoomPhotoCardList photos={photos} />}
     </div>
   );
 }
