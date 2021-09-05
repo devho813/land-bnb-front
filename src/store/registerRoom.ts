@@ -21,6 +21,8 @@ type RegisterRoomState = {
   latitude: number;
   longitude: number;
   photos: string[];
+  startDate: string | null;
+  endDate: string | null;
 };
 
 const initialState: RegisterRoomState = {
@@ -41,7 +43,9 @@ const initialState: RegisterRoomState = {
   postcode: "", // 우편번호
   latitude: 0, // 위도
   longitude: 0, // 경도
-  photos: []
+  photos: [],
+  startDate: null,
+  endDate: null,
 };
 
 const registerRoom = createSlice({
@@ -142,6 +146,12 @@ const registerRoom = createSlice({
     setPhotos(state, action: PayloadAction<string[]>) {
       state.photos = action.payload;
       return state;
+    },
+    setStartDate(state, action: PayloadAction<string | null>) {
+      state.startDate = action.payload;
+    },
+    setEndDate(state, action: PayloadAction<string | null>) {
+      state.endDate = action.payload;
     },
   },
 });
