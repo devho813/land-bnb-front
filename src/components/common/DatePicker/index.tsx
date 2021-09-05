@@ -1,21 +1,21 @@
-import { SyntheticEvent } from "react";
-import ReactDatePicker from "react-datepicker";
+import { addHours } from "date-fns";
+import ReactDatePicker, { ReactDatePickerProps } from "react-datepicker";
 import { container } from "./styles";
 
-interface IProps {
-  onChange: (
-    date: Date | [Date | null, Date | null] | null,
-    event: SyntheticEvent<any, Event> | undefined
-  ) => void;
-}
-
-function DatePicker({ onChange, ...props }: IProps) {
+function DatePicker({ onChange, ...props }: ReactDatePickerProps<any>) {
   return (
     <div css={container}>
       <ReactDatePicker
         disabledKeyboardNavigation
         {...props}
-        onChange={onChange}
+        onChange={(date, event) => {
+          if (date) {
+            onChange(addHours(date as Date, 9), event);
+          } else {
+            onChange(null, event);
+          }
+        }}
+        dateFormat="MM월 dd일"
       />
     </div>
   );
